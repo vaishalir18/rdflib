@@ -109,7 +109,7 @@ def _total_seconds(td):
     return result
 
 
-class _runtime:  # noqa: N801
+class _Runtime:
     def __init__(self, label):
         self.label = label
 
@@ -128,7 +128,7 @@ class _runtime:  # noqa: N801
         return wrapped_f
 
 
-class _call_count:  # noqa: N801
+class _CallCount:
     def __init__(self, label):
         self.label = label
 
@@ -370,7 +370,7 @@ class _TripleCanonicalizer:
                 combined_color_map[color_hash] = color
         return combined_colors
 
-    @_runtime("to_hash_runtime")
+    @_Runtime("to_hash_runtime")
     def to_hash(self, stats: Stats | None = None):
         result = 0
         for triple in self.canonical_triples(stats=stats):
@@ -404,7 +404,7 @@ class _TripleCanonicalizer:
                 groupings[n] = g
         return groupings
 
-    @_call_count("individuations")
+    @_CallCount("individuations")
     def _traces(
         self,
         coloring: list[Color],

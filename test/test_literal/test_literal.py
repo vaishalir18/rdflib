@@ -778,7 +778,7 @@ def test_non_false_boolean() -> None:
 
 
 def test_binding(clear_bindings: None) -> None:
-    class a:  # noqa: N801
+    class A:
         def __init__(self, v: str) -> None:
             self.v = v[3:-3]
 
@@ -786,18 +786,18 @@ def test_binding(clear_bindings: None) -> None:
             return "<<<%s>>>" % self.v
 
     dtA = rdflib.URIRef("urn:dt:a")  # noqa: N806
-    bind(dtA, a)
+    bind(dtA, A)
 
-    va = a("<<<2>>>")
+    va = A("<<<2>>>")
     la = Literal(va, normalize=True)
     assert la.value == va
     assert la.datatype == dtA
 
     la2 = Literal("<<<2>>>", datatype=dtA)
-    assert isinstance(la2.value, a)
+    assert isinstance(la2.value, A)
     assert la2.value.v == va.v
 
-    class b:  # noqa: N801
+    class B:
         def __init__(self, v: str) -> None:
             self.v = v[3:-3]
 
@@ -805,9 +805,9 @@ def test_binding(clear_bindings: None) -> None:
             return "B%s" % self.v
 
     dtB = rdflib.URIRef("urn:dt:b")  # noqa: N806
-    bind(dtB, b, None, lambda x: "<<<%s>>>" % x)
+    bind(dtB, B, None, lambda x: "<<<%s>>>" % x)
 
-    vb = b("<<<3>>>")
+    vb = B("<<<3>>>")
     lb = Literal(vb, normalize=True)
     assert lb.value == vb
     assert lb.datatype == dtB
